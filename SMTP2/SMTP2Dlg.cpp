@@ -54,17 +54,24 @@ CSMTP2Dlg::CSMTP2Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_SMTP2_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_ip = _T("");
+	m_port = 0;
 }
 
 void CSMTP2Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_IP, m_ip);
+	DDX_Text(pDX, IDC_PORT, m_port);
+	DDX_Control(pDX, IDC_READY, m_ready);
 }
 
 BEGIN_MESSAGE_MAP(CSMTP2Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_OPEN, &CSMTP2Dlg::OnBnClickedOpen)
+	ON_BN_CLICKED(IDC_CLOSE, &CSMTP2Dlg::OnBnClickedClose)
 END_MESSAGE_MAP()
 
 
@@ -100,6 +107,19 @@ BOOL CSMTP2Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	// 获取本机IP地址
+	char hostName[100];
+	gethostname(hostName, sizeof(hostName));
+	hostent* hn = gethostbyname(hostName);
+	m_ip = inet_ntoa(*(in_addr*)hn->h_addr);
+	// 设置端口号
+	m_port = 25;
+	UpdateData(false);
+	// 隐藏服务器正在监听字段，对应还没开始监听
+	m_ready.ShowWindow(SW_HIDE);
+	// 创建服务器端监听套接字线程
+
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -153,3 +173,18 @@ HCURSOR CSMTP2Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CSMTP2Dlg::OnBnClickedOpen()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	m_ready.ShowWindow(SW_SHOW);
+}
+
+
+void CSMTP2Dlg::OnBnClickedClose()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	m_ready.ShowWindow(SW_HIDE);
+}

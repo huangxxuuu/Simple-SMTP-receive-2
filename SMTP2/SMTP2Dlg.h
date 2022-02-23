@@ -31,4 +31,12 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	CString m_ip;
+	int m_port;
+//	afx_msg void OnBnClickedOk();
+//	afx_msg void OnBnClickedCancel();
+	CStatic m_ready;
+	afx_msg void OnBnClickedOpen();
+	afx_msg void OnBnClickedClose();
 };
