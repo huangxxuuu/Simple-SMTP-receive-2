@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "CSocketMainThread.h"
 
 // CSMTP2Dlg 对话框
 class CSMTP2Dlg : public CDialogEx
@@ -39,4 +39,5 @@ public:
 	CStatic m_ready;
 	afx_msg void OnBnClickedOpen();
 	afx_msg void OnBnClickedClose();
+	CSocketMainThread* pSocketMainThread;
 };

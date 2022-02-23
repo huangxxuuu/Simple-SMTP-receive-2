@@ -177,7 +177,9 @@ HCURSOR CSMTP2Dlg::OnQueryDragIcon()
 void CSMTP2Dlg::OnBnClickedOpen()
 {
 	// TODO: 在此添加控件通知处理程序代码
-
+	pSocketMainThread = new CSocketMainThread();
+	//pSocketMainThread->socketMain.Create();
+	pSocketMainThread->CreateThread();
 	m_ready.ShowWindow(SW_SHOW);
 }
 
@@ -185,6 +187,6 @@ void CSMTP2Dlg::OnBnClickedOpen()
 void CSMTP2Dlg::OnBnClickedClose()
 {
 	// TODO: 在此添加控件通知处理程序代码
-
+	pSocketMainThread->PostThreadMessageW(WM_QUIT, 0, 0);
 	m_ready.ShowWindow(SW_HIDE);
 }
