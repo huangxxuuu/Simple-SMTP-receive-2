@@ -45,6 +45,12 @@
     <ClInclude Include="CSocketReceive.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Base64.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSocketReceiveThread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SMTP2.cpp">
@@ -66,6 +72,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CSocketReceive.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Base64.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSocketReceiveThread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

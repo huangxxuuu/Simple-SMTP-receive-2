@@ -40,4 +40,6 @@ public:
 	afx_msg void OnBnClickedOpen();
 	afx_msg void OnBnClickedClose();
 	CSocketMainThread* pSocketMainThread;
+protected:
+	afx_msg LRESULT OnMyReceivesocket(WPARAM wParam, LPARAM lParam);
 };

@@ -20,6 +20,9 @@
 #define IDC_LIST_ATTACHMENT             1011
 #define IDC_BUTTON_SHOWPIC              1012
 #define IDC_RECT_SHOWPIC                1013
+#define WM_MY_RECEIVESOCKET				WM_USER+100
+#define WM_MY_PROCESSMAIL				WM_USER+101
+#define WM_MY_PARSEMAIL					WM_USER+102
 
 // Next default values for new objects
 // 

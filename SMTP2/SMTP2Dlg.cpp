@@ -7,6 +7,8 @@
 #include "SMTP2.h"
 #include "SMTP2Dlg.h"
 #include "afxdialogex.h"
+#include "CSocketReceiveThread.h"
+#include "CReceiveDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -72,6 +74,7 @@ BEGIN_MESSAGE_MAP(CSMTP2Dlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_OPEN, &CSMTP2Dlg::OnBnClickedOpen)
 	ON_BN_CLICKED(IDC_CLOSE, &CSMTP2Dlg::OnBnClickedClose)
+	ON_MESSAGE(WM_MY_RECEIVESOCKET, &CSMTP2Dlg::OnMyReceivesocket)
 END_MESSAGE_MAP()
 
 
@@ -117,9 +120,7 @@ BOOL CSMTP2Dlg::OnInitDialog()
 	UpdateData(false);
 	// 隐藏服务器正在监听字段，对应还没开始监听
 	m_ready.ShowWindow(SW_HIDE);
-	// 创建服务器端监听套接字线程
-
-
+	// 创建服务器端监听套接字线程,在点击开始之后
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -189,4 +190,20 @@ void CSMTP2Dlg::OnBnClickedClose()
 	// TODO: 在此添加控件通知处理程序代码
 	pSocketMainThread->PostThreadMessageW(WM_QUIT, 0, 0);
 	m_ready.ShowWindow(SW_HIDE);
+}
+
+
+afx_msg LRESULT CSMTP2Dlg::OnMyReceivesocket(WPARAM wParam, LPARAM lParam)
+{
+	// 传入的wParam是套接字句柄
+	CSocketReceiveThread* pRThread = new CSocketReceiveThread();
+	CReceiveDlg* pRDlg = new CReceiveDlg();
+	pRDlg->Create(IDD_RECEIVE_DIALOG);
+	pRDlg->ShowWindow(SW_SHOW);
+	pRDlg->pThread = pRThread;
+	//pRThread->m_pMainWnd = this;
+	pRThread->dlg = pRDlg;
+	pRThread->handSocket = wParam;
+	pRThread->CreateThread();
+	return 0;
 }

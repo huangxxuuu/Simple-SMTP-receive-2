@@ -183,10 +183,12 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Base64.h" />
     <ClInclude Include="CReceiveDialog.h" />
     <ClInclude Include="CSocketMain.h" />
     <ClInclude Include="CSocketMainThread.h" />
     <ClInclude Include="CSocketReceive.h" />
+    <ClInclude Include="CSocketReceiveThread.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -195,10 +197,12 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Base64.cpp" />
     <ClCompile Include="CReceiveDialog.cpp" />
     <ClCompile Include="CSocketMain.cpp" />
     <ClCompile Include="CSocketMainThread.cpp" />
     <ClCompile Include="CSocketReceive.cpp" />
+    <ClCompile Include="CSocketReceiveThread.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

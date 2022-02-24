@@ -4,5 +4,6 @@ class CSocketMain :
 {
 public:
     virtual void OnAccept(int nErrorCode);
+    virtual void OnReceive(int nErrorCode);
 };
 

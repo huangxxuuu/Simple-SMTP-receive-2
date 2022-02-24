@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "afxdialogex.h"
+#include "CSocketReceiveThread.h"
 
 
 // CReceiveDialog 对话框
@@ -25,9 +26,9 @@ public:
 	// 客户端服务器命令交互日志
 	CListBox m_listLog;
 	// 邮件报内容
-	CEdit m_editMail;
+	CString m_editMail;
 	// 邮件正文内容
-	CEdit m_editText;
+	CString m_editText;
 	// 邮件附件列表
 	CListBox m_listAttachment;
 	// 显示图片的区域
@@ -37,4 +38,10 @@ public:
 	CString picname;
 	CRect picrect;
 	afx_msg void OnPaint();
+	afx_msg void OnDestroy();
+	afx_msg void OnClose();
+protected:
+	afx_msg LRESULT OnMyProcessmail(WPARAM wParam, LPARAM lParam);
+public:
+	CSocketReceiveThread* pThread;
 };
