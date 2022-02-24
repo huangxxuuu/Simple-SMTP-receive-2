@@ -4,6 +4,9 @@
 
 #pragma once
 #include "CSocketMainThread.h"
+#include <unordered_set>
+#include "CReceiveDialog.h"
+#include "CSocketReceiveThread.h"
 
 // CSMTP2Dlg 对话框
 class CSMTP2Dlg : public CDialogEx
@@ -34,12 +37,13 @@ protected:
 public:
 	CString m_ip;
 	int m_port;
-//	afx_msg void OnBnClickedOk();
-//	afx_msg void OnBnClickedCancel();
 	CStatic m_ready;
 	afx_msg void OnBnClickedOpen();
 	afx_msg void OnBnClickedClose();
 	CSocketMainThread* pSocketMainThread;
 protected:
 	afx_msg LRESULT OnMyReceivesocket(WPARAM wParam, LPARAM lParam);
+public:
+	std::unordered_set<CReceiveDlg*> usetReceiveDlg;
+	std::unordered_set<CSocketReceiveThread*> usetReceiveThread;
 };

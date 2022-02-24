@@ -6,6 +6,7 @@ IMPLEMENT_DYNCREATE(CSocketReceiveThread, CWinThread)
 
 BEGIN_MESSAGE_MAP(CSocketReceiveThread, CWinThread)
 	ON_MESSAGE(WM_MY_PARSEMAIL, (LRESULT(__cdecl CWnd::*)(WPARAM, LPARAM))& CSocketReceiveThread::OnMyParsemail)
+	ON_MESSAGE(WM_MY_QUITHREAD, (LRESULT(__cdecl CWnd::*)(WPARAM, LPARAM))& CSocketReceiveThread::OnMyQuit)
 END_MESSAGE_MAP()
 
 
@@ -22,23 +23,34 @@ BOOL CSocketReceiveThread::InitInstance()
 	return true;
 }
 
-
-int CSocketReceiveThread::Run()
-{
-	// TODO: 在此添加专用代码和/或调用基类
-
-	return CWinThread::Run();
-}
-
 afx_msg LRESULT CSocketReceiveThread::OnMyParsemail(WPARAM wParam, LPARAM lParam)
 {
 	socket.AddDatafilecount();
 	socket.ParseMail();
+	PostQuitMessage(0);
 	return 0;
 }
 
 int CSocketReceiveThread::ExitInstance()
 {
 	// TODO: 在此添加专用代码和/或调用基类
+
+	socket.outfileCache.clear();
+	socket.outfileCache.shrink_to_fit();
+	socket.datafile.clear();
+	socket.datafile.shrink_to_fit();
+	socket.content.clear();
+	socket.content.shrink_to_fit();
+	socket.wbuffer.Empty();
+	socket.wbuffer.FreeExtra();
+	if (socket.outfileStream.is_open()) {
+		socket.outfileStream.close();
+	}
 	return CWinThread::ExitInstance();
+}
+
+afx_msg LRESULT CSocketReceiveThread::OnMyQuit(WPARAM wParam, LPARAM lParam)
+{
+	PostQuitMessage(0);
+	return 0;
 }

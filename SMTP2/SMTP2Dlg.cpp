@@ -75,6 +75,7 @@ BEGIN_MESSAGE_MAP(CSMTP2Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_OPEN, &CSMTP2Dlg::OnBnClickedOpen)
 	ON_BN_CLICKED(IDC_CLOSE, &CSMTP2Dlg::OnBnClickedClose)
 	ON_MESSAGE(WM_MY_RECEIVESOCKET, &CSMTP2Dlg::OnMyReceivesocket)
+//	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -120,7 +121,6 @@ BOOL CSMTP2Dlg::OnInitDialog()
 	UpdateData(false);
 	// 隐藏服务器正在监听字段，对应还没开始监听
 	m_ready.ShowWindow(SW_HIDE);
-	// 创建服务器端监听套接字线程,在点击开始之后
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -178,9 +178,10 @@ HCURSOR CSMTP2Dlg::OnQueryDragIcon()
 void CSMTP2Dlg::OnBnClickedOpen()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	pSocketMainThread = new CSocketMainThread();
-	//pSocketMainThread->socketMain.Create();
-	pSocketMainThread->CreateThread();
+	if (pSocketMainThread == nullptr) {
+		pSocketMainThread = new CSocketMainThread();
+		pSocketMainThread->CreateThread();
+	}
 	m_ready.ShowWindow(SW_SHOW);
 }
 
@@ -188,7 +189,9 @@ void CSMTP2Dlg::OnBnClickedOpen()
 void CSMTP2Dlg::OnBnClickedClose()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	pSocketMainThread->PostThreadMessageW(WM_QUIT, 0, 0);
+	if(pSocketMainThread != nullptr)
+		pSocketMainThread->PostThreadMessageW(WM_MY_QUITHREAD, 0, 0);
+	pSocketMainThread = nullptr;
 	m_ready.ShowWindow(SW_HIDE);
 }
 
@@ -205,5 +208,7 @@ afx_msg LRESULT CSMTP2Dlg::OnMyReceivesocket(WPARAM wParam, LPARAM lParam)
 	pRThread->dlg = pRDlg;
 	pRThread->handSocket = wParam;
 	pRThread->CreateThread();
+	usetReceiveDlg.insert(pRDlg);
+	usetReceiveThread.insert(pRThread);
 	return 0;
 }

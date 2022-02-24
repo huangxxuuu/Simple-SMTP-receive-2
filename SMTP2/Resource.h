@@ -23,6 +23,7 @@
 #define WM_MY_RECEIVESOCKET				WM_USER+100
 #define WM_MY_PROCESSMAIL				WM_USER+101
 #define WM_MY_PARSEMAIL					WM_USER+102
+#define WM_MY_QUITHREAD					WM_USER+103
 
 // Next default values for new objects
 // 

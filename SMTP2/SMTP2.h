@@ -27,6 +27,7 @@ public:
 // 实现
 
 	DECLARE_MESSAGE_MAP()
+//	virtual BOOL OnIdle(LONG lCount);
 };
 
 extern CSMTP2App theApp;

@@ -6,6 +6,7 @@
 IMPLEMENT_DYNCREATE(CSocketMainThread, CWinThread)
 
 BEGIN_MESSAGE_MAP(CSocketMainThread, CWinThread)
+	ON_MESSAGE(WM_MY_QUITHREAD, (LRESULT(__cdecl CWnd::*)(WPARAM, LPARAM))&CSocketMainThread::OnMyQuit)
 END_MESSAGE_MAP()
 
 
@@ -29,25 +30,12 @@ BOOL CSocketMainThread::InitInstance()
 int CSocketMainThread::ExitInstance()
 {
 	// TODO: 在此添加专用代码和/或调用基类
-	//int a = 1;
 	socketMain.Close();
 	return CWinThread::ExitInstance();
 }
 
 
-int CSocketMainThread::Run()
-{
-	// TODO: 在此添加专用代码和/或调用基类
-
-	return CWinThread::Run();
-}
-
-
-BOOL CSocketMainThread::OnIdle(LONG lCount)
-{
-	// TODO: 在此添加专用代码和/或调用基类
-	//int a;
-	//a = 5;
-	//CWinThread::OnIdle(lCount)
-	return CWinThread::OnIdle(lCount);
+afx_msg LRESULT CSocketMainThread::OnMyQuit(WPARAM wParam, LPARAM lParam) {
+	PostQuitMessage(0);
+	return 0;
 }

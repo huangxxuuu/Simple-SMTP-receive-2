@@ -8,9 +8,8 @@ class CSocketMainThread :
 public:
     virtual BOOL InitInstance();
     virtual int ExitInstance();
-    virtual int Run();
-    virtual BOOL OnIdle(LONG lCount);
-    DECLARE_MESSAGE_MAP()
     CSocketMain socketMain;
+    afx_msg LRESULT CSocketMainThread::OnMyQuit(WPARAM wParam, LPARAM lParam);
+    DECLARE_MESSAGE_MAP()
 };
 

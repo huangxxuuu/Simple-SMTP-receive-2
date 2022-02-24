@@ -8,7 +8,6 @@ constexpr auto FILENAMESIZE = 256;
 class CSocketReceive :
     public CAsyncSocket
 {
-    //DECLARE_DYNCREATE(CSocketReceive)
 public:
     virtual void OnReceive(int nErrorCode);
 	char buffer[BUFFERSIZE];//用于从tcp输入流中获取字符
@@ -22,15 +21,13 @@ public:
 	bool binfile;			//表示是否处于二进制文件接收模式，Content-Type: image或Content-Type: application
 	bool base64;		//记录遇到Content-Transfer-Encoding: base64，准备解码
 	bool encode;		//base64为真后，遇到的第一个空行，开始解码
-	std::ofstream picture;
-	std::string picstr;
-	//virtual void OnClose(int nErrorCode);
+	std::ofstream outfileStream;
+	std::string outfileCache;
 	CWnd* pRDlg;
 	DWORD threadID;
 	int ParseMail();
 	int datafileCount;
 	int AddDatafilecount();
 	std::string content;
-//	std::vector<std::string> filenames;
 };
 

@@ -23,6 +23,7 @@ inline bool check(std::string& s, int start, char *str) {
 
 void CSocketReceive::OnReceive(int nErrorCode)
 {
+	//return;
 	// TODO: 在此添加专用代码和/或调用基类
 	memset(buffer, 0, BUFFERSIZE * sizeof(char));
 	if (state == 0) {
@@ -56,6 +57,7 @@ void CSocketReceive::OnReceive(int nErrorCode)
 		PostMessage(pRDlg->m_hWnd, WM_MY_PROCESSMAIL, 0, 0);
 	}
 	else {
+		//while (true) Sleep(5000);
 		int n = Receive(buffer, BUFFERSIZE);
 		datafile.append(buffer, 0, n);
 		if (check(datafile, datafile.size()-5, "\r\n.\r\n")) {
@@ -112,15 +114,15 @@ int CSocketReceive::ParseMail()
 						content.shrink_to_fit();
 					}
 					else {
-						picstr += "\r\n";
-						char* a = (char*)picstr.c_str();
+						outfileCache += "\r\n";
+						char* a = (char*)outfileCache.c_str();
 						char* s;
 						size_t len = TranBase64(a, &s);
-						picture.open(filename, std::ios::binary | std::ios::out | std::ios::trunc);
-						picture.write(a, len / 4 * 3);
-						picture.close();
-						picstr.clear();
-						picstr.shrink_to_fit();
+						outfileStream.open(filename, std::ios::binary | std::ios::out | std::ios::trunc);
+						outfileStream.write(a, len / 4 * 3);
+						outfileStream.close();
+						outfileCache.clear();
+						outfileCache.shrink_to_fit();
 						wbuffer.Format(_T("S:%S"), filename.c_str());
 						((CReceiveDlg*)pRDlg)->m_listLog.InsertString(-1, wbuffer);
 						filename.clear();
@@ -133,7 +135,7 @@ int CSocketReceive::ParseMail()
 					size_t start = i;
 					j = picenter(datafile, i);  // [i,j)
 					if (binfile) {	//对于二进制类型的处理
-						picstr = datafile.substr(start, i - start);
+						outfileCache = datafile.substr(start, i - start);
 					}
 					else {			//对于text类型的处理
 						content = datafile.substr(start, i - start);
@@ -153,9 +155,10 @@ int CSocketReceive::ParseMail()
 		}
 		i = j;
 	}
+	datafile.clear();
+	datafile.shrink_to_fit();
 	PostMessage(pRDlg->m_hWnd, WM_MY_PROCESSMAIL, 0, 0);
 	AddDatafilecount();
-	AfxEndThread(0);
 	return 0;
 }
 

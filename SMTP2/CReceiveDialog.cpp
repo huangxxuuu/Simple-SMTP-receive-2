@@ -113,7 +113,13 @@ void CReceiveDlg::OnClose()
 	m_editMail.FreeExtra();
 	m_editText.Empty();
 	m_editText.FreeExtra();
-	pThread->ResumeThread();
+	DWORD ret;
+	if (GetExitCodeThread(pThread->m_hThread, &ret)) {
+		if (ret == STILL_ACTIVE) {
+			pThread->PostThreadMessageW(WM_MY_QUITHREAD, 0, 0);
+		}
+	}
+	DestroyWindow();
 	CDialogEx::OnClose();
 }
 

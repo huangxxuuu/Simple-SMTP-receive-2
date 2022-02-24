@@ -12,10 +12,9 @@ public:
     virtual BOOL InitInstance();
     CSocketReceive socket;
     SOCKET handSocket;
-    virtual int Run();
     CWnd* dlg;
-
-    DECLARE_MESSAGE_MAP()
+    afx_msg LRESULT CSocketReceiveThread::OnMyQuit(WPARAM wParam, LPARAM lParam);
     virtual int ExitInstance();
+    DECLARE_MESSAGE_MAP()
 };
 
