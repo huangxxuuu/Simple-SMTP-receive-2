@@ -39,6 +39,12 @@
     <ClInclude Include="CSocketMain.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CReceiveDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSocketReceive.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SMTP2.cpp">
@@ -54,6 +60,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CSocketMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CReceiveDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSocketReceive.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
