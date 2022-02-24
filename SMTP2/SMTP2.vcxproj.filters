@@ -36,6 +36,9 @@
     <ClInclude Include="CSocketMainThread.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CSocketMain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SMTP2.cpp">
@@ -48,6 +51,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CSocketMainThread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSocketMain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
